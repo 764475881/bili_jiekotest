@@ -1,5 +1,5 @@
 import json
-
+from datetime import datetime
 
 
 def bilibili_popular_json(response):
@@ -92,3 +92,50 @@ def bilibili_replies_json(response):
     else:
         print(f"请求失败，状态码：{response.status_code}")
     return replies_list
+
+def bilibili_replies_replies_json(response):
+    jsonlist = []
+    if response.status_code == 200:
+        data = response.json()
+        root_data = data.get('data', {}).get('root', {})
+
+        if root_data:
+            member_info = root_data.get('member', {})
+            vip_info = member_info.get('vip', {})
+            reply_control = root_data.get('reply_control', {})
+
+            reply_data = {
+                'rpid': root_data.get('rpid'),
+                'rpid_str': root_data.get('rpid_str'),
+                'oid': root_data.get('oid'),
+                'type': root_data.get('type'),
+                'mid': root_data.get('mid'),
+                'root': root_data.get('root'),
+                'parent': root_data.get('parent'),
+                'dialog': root_data.get('dialog'),
+                'count': root_data.get('count'),
+                'rcount': root_data.get('rcount'),
+                'state': root_data.get('state'),
+                'fansgrade': root_data.get('fansgrade'),
+                'attr': root_data.get('attr'),
+                'ctime': root_data.get('ctime'),
+                'like_count': root_data.get('like'),
+                'action': root_data.get('action'),
+                'message': root_data.get('content', {}).get('message'),
+                'member_mid': member_info.get('mid'),
+                'member_uname': member_info.get('uname'),
+                'member_sex': member_info.get('sex'),
+                'member_sign': member_info.get('sign'),
+                'member_avatar': member_info.get('avatar'),
+                'member_level': member_info.get('level_info', {}).get('current_level'),
+                'vip_type': vip_info.get('vipType'),
+                'vip_label': vip_info.get('label', {}).get('text'),
+                'reply_time_desc': reply_control.get('time_desc'),
+                'reply_location': reply_control.get('location'),
+                'up_like': root_data.get('up_action', {}).get('like'),
+                'up_reply': root_data.get('up_action', {}).get('reply'),
+            }
+            jsonlist.append(reply_data)
+    else:
+        print(f"请求失败，状态码：{response.status_code}")
+    return jsonlist

@@ -3,3 +3,4 @@ def commit_sql(conn,sql,values):
     for value in values:
         cursor.execute(sql,value)
     conn.commit()
+    conn.close()
