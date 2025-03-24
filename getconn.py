@@ -12,9 +12,9 @@ class DBConnectionPool:
     def _create_pool(cls):
         config = {
             'user': 'root',
-            'password': '1.hanmang@ZX',
+            'password': 'xxx',
             'host': '10.11.12.141',
-            'database': 'miku',
+            'database': 'xxx',
             'port': 3306,
             'charset': 'utf8mb4',
             'cursorclass': pymysql.cursors.DictCursor  # 推荐添加返回字典格式游标
